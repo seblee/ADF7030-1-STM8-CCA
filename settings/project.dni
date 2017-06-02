@@ -1,0 +1,102 @@
+[DebugChecksum]
+Checksum=-424937081
+[DisAssemblyWindow]
+NumStates=_ 1
+State 1=_ 1
+[InstructionProfiling]
+Enabled=_ 0
+[CodeCoverage]
+Enabled=_ 0
+[StackPlugin]
+Enabled=1
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnHow=0
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+[InterruptLog]
+LogEnabled=0
+SumEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+SumSortOrder=0
+[Interrupts]
+Enabled=1
+[MemoryMap]
+Enabled=0
+Base=0
+UseAuto=0
+TypeViolation=1
+UnspecRange=1
+ActionState=1
+[TraceHelper]
+Enabled=0
+ShowSource=1
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[BreakpointUsageDialog]
+Placement=_ 738 379 1183 662
+[struct_types]
+Fmt0=uFLAG-BYTE	4	0
+[array_types]
+Fmt0=u8_t[40]	4	0
+Fmt1=uint32_t[6]	4	0
+Fmt2=unsigned char[4]	1	0
+Fmt3=unsigned int[100]	4	0
+Fmt4=unsigned int[25]	4	0
+Fmt5=unsigned int[3]	4	0
+[watch_formats]
+Fmt0={W}0:ADF7030_RESIGER_VALUE_READ	4	0
+Fmt1={W}0:COUNT_Receiver_Login	3	0
+Fmt2={W}0:Head_0x5515_or_0x5456	4	0
+Fmt3={W}0:RAM_rssi_AVG	3	0
+Fmt4={W}0:test_AGC	2	0
+Fmt5={W}0:test_RSSI	3	0
+Fmt6={W}1:ADF7030_RESIGER_VALUE_READ	4	0
+Fmt7={W}1:ADF7030_Read_OneByte	4	0
+Fmt8={W}1:CCA_READBACK_Cache	4	0
+[DataSample]
+LogEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+[Breakpoints]
+Bp0=_ "STD_DATA" "ModeTrans" 0 0 0 3 0 "" 0 ""
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\user_src\ADF7030_1.c}.868.17" 1 0 0 0 "" 0 ""
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\user_src\ADF7030_1.c}.861.17" 1 0 0 0 "" 0 ""
+Bp3=_ "STD_CODE" "{$PROJ_DIR$\user_src\ADF7030_1.c}.438.9" 1 0 0 0 "" 0 ""
+Count=4
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Aliases]
+Count=0
+SuppressDialog=0
+[DebuggerSettings]
+DisableInterruptsWhenStepping=0

@@ -1,0 +1,116 @@
+[Root]
+Most Recent Package=标准安装软件包 1
+
+
+[Package|标准安装软件包 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\out
+
+[Package|标准安装软件包 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|标准安装软件包 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|标准安装软件包 1|Files Found]
+
+[Package|标准安装软件包 1|Files Released]
+
+[Package|标准安装软件包 1|Missing Dependency Information]
+
+[Package|标准安装软件包 1|Out-of-Date Dependency Information]
+
+[Package|标准安装软件包 1|Files Added]
+f:\source code\gun on\gun_id_pic16f1824\ver2.0 tx_flash_cpu_pic16f1823\pc_soft\media_stop_red.ico=
+f:\source code\gun on\gun_id_pic16f1824\ver2.0 tx_flash_cpu_pic16f1823\pc_soft\nav_plain_green.ico=
+f:\source code\gun on\gun_id_pic16f1824\ver2.0 tx_flash_cpu_pic16f1823\pc_soft\navigate_check.ico=
+f:\source code\gun on\gun_id_pic16f1824\ver2.0 tx_flash_cpu_pic16f1823\pc_soft\navigate_cross.ico=
+
+[Package|标准安装软件包 1|Files Removed]
+
+[Package|标准安装软件包 1|Files In Project]
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\WINDOWS\system32\oleaut32.dll=Yes
+C:\WINDOWS\system32\olepro32.dll=Yes
+C:\WINDOWS\system32\asycfilt.dll=Yes
+C:\WINDOWS\system32\stdole2.tlb=Yes
+C:\WINDOWS\system32\VB6CHS.DLL=Yes
+C:\WINDOWS\system32\MSCOMM32.OCX=Yes
+C:\WINDOWS\system32\MSCOMCHS.DLL=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\media_stop_red.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\nav_plain_green.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_check.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_cross.ico=Yes
+F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\Bunka-s Ver1.0.exe=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+
+[Package|标准安装软件包 1|Configure Registry Files]
+Applicable=No
+
+[Package|标准安装软件包 1|Configure Remote Servers]
+Applicable=No
+
+[Package|标准安装软件包 1|Install Locations]
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\GUN ID.exe=$(AppPath)
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\oleaut32.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\olepro32.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\asycfilt.dll=$(WinSysPathSysFile)
+C:\WINDOWS\system32\stdole2.tlb=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\system32\VB6CHS.DLL=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMM32.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMCHS.DLL=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\media_stop_red.ico=$(AppPath)
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\nav_plain_green.ico=$(AppPath)
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_check.ico=$(AppPath)
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_cross.ico=$(AppPath)
+F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\Bunka-s Ver1.0.exe=$(AppPath)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+
+[Package|标准安装软件包 1|Configure Shared Files]
+Applicable=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\GUN ID.exe=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\media_stop_red.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\nav_plain_green.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_check.ico=Yes
+F:\Source Code\GUN ON\gun_id_pic16f1824\Ver2.0 TX_FLASH_CPU_PIC16F1823\PC_SOFT\navigate_cross.ico=Yes
+F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\Bunka-s Ver1.0.exe=No
+
+[Package|标准安装软件包 1|Distribution]
+Type=single
+Size=
+Title=工程1
+
+[Package|标准安装软件包 1|IconGroups]
+Group0=工程1
+PrivateGroup0=True
+Parent0=$(Programs)
+
+[Package|标准安装软件包 1|工程1]
+Icon1="GUN ID.exe"
+Title1=工程1
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|标准安装软件包 1|Package]
+PackageFolder=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\out
+ProjectFolder=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT
+ServerSideCab=
+File1=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\out\setup.exe
+File2=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\out\Setup.Lst
+File3=F:\Source Code\bunka-s\Bunka STM8L051F3 TX Source\Bunka STM8L051F3 TX Source Ver1.5\PC_SOFT\out\Bunka-s Ver1.0.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz
