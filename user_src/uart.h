@@ -15,5 +15,4 @@ void Send_char(unsigned char ch);
 void UART1_end(void);
 void PC_PRG(void);
 
-
 #endif

@@ -6,21 +6,19 @@
 /*  DESCRIPTION :                                                      */
 /*  Mark        :ver 1.0                                               */
 /***********************************************************************/
-#include  <iostm8l151g4.h>				// CPU型号
-#include "Pin_define.h"		// 管脚定义
-#include "initial.h"		// 初始化  预定义
-#include "ram.h"		// RAM定义
+#include <iostm8l151g4.h> // CPU型号
+#include "Pin_define.h"   // 管脚定义
+#include "initial.h"      // 初始化  预定义
+#include "ram.h"          // RAM定义
 #include "ID_Decode.h"
-#include "eeprom.h"		// eeprom
-#include "uart.h"		// uart
+#include "eeprom.h" // eeprom
+#include "uart.h"   // uart
 #include "ADF7030_1.h"
 #include "type_def.h"
 #include "lcd.h"
 //接收数据位置标志
 volatile uFLAG BX_RecevieBlockFlag;
 volatile uFLAG FLAG0;
-
-
 
 /**
  ****************************************************************************
@@ -31,16 +29,14 @@ volatile uFLAG FLAG0;
  * @Brief    :
  * @Version  : V1.0
 **/
-void EXIT_init(void){
+void EXIT_init(void)
+{
 
-//   EXTI_CR1=0x20;             //PORT B2  的中断触发位
-//   ADF7021_DATA_CLK_CR2=1;     //使能该I/O口中断  PA1
-//   EXTI_CR2=0X00;
-//   PIN_PD7_CR2=1;
+    //   EXTI_CR1=0x20;             //PORT B2  的中断触发位
+    //   ADF7021_DATA_CLK_CR2=1;     //使能该I/O口中断  PA1
+    //   EXTI_CR2=0X00;
+    //   PIN_PD7_CR2=1;
 }
-
-
-
 
 /**
  ****************************************************************************
@@ -51,19 +47,22 @@ void EXIT_init(void){
  * @Brief    : 查找位移地址 递归调用
  * @Version  : V1.0
 **/
-u8 PacketCheckForA(u32 *Packet,u8 i)
+u8 PacketCheckForA(u32 *Packet, u8 i)
 {
-    u32 Cache,Cache_Left,Cache_Right;
+    u32 Cache, Cache_Left, Cache_Right;
     u8 I_Cache;
-    Cache_Left = (*(Packet+(i / 32))<<(i % 32));
-    Cache_Right = (0xffffffff>>(32 - (i % 32))) & (*(Packet + (i / 32 + 1)));
-    Cache = Cache_Left|Cache_Right;
-    if(Cache == 0x55555555)return i;     //成功找到A部特点数据
-    if(i < 60)
+    Cache_Left = (*(Packet + (i / 32)) << (i % 32));
+    Cache_Right = (0xffffffff >> (32 - (i % 32))) & (*(Packet + (i / 32 + 1)));
+    Cache = Cache_Left | Cache_Right;
+    if (Cache == 0x55555555)
+        return i; //成功找到A部特点数据
+    if (i < 60)
     {
-        I_Cache = PacketCheckForA(Packet,i+1);
+        I_Cache = PacketCheckForA(Packet, i + 1);
         return I_Cache;
-    }else return 0xff;        //查找失败 没有此地址
+    }
+    else
+        return 0xff; //查找失败 没有此地址
 }
 
 /**
@@ -77,40 +76,40 @@ u8 PacketCheckForA(u32 *Packet,u8 i)
 **/
 void ID_Decode_function(void)
 {
-    u8 i,j,k;
+    u8 i, j, k;
     u32 *Pornt_Syn_A;
     u16 *Pornt_Syn_B;
-    u32 Cache,Cache_Left,Cache_Right;
+    u32 Cache, Cache_Left, Cache_Right;
     Pornt_Syn_A = (u32 *)&SPI_RECEIVE_BUFF[0];
     Pornt_Syn_B = (u16 *)&SPI_RECEIVE_BUFF[0];
     BX_RecevieBlockFlag.BYTE = 0;
-    for(i = 0;i < 60;i++) //同步字节处理为16位，最后一个A部32为数据位地址为 99-8-32
+    for (i = 0; i < 60; i++) //同步字节处理为16位，最后一个A部32为数据位地址为 99-8-32
     {
-        Cache_Left = (*(Pornt_Syn_A+(i / 32))<<(i % 32));
-        Cache_Right = (*(Pornt_Syn_A + (i / 32 + 1)))>>(32 - (i % 32));
-        Cache = Cache_Left|Cache_Right;
-        if(Cache == 0x55555555)
+        Cache_Left = (*(Pornt_Syn_A + (i / 32)) << (i % 32));
+        Cache_Right = (*(Pornt_Syn_A + (i / 32 + 1))) >> (32 - (i % 32));
+        Cache = Cache_Left | Cache_Right;
+        if (Cache == 0x55555555)
         {
             BX_RecevieBlockFlag.BYTE = 1;
-            break;     //成功找到A部特点数据
+            break; //成功找到A部特点数据
         }
     }
-    for(j = (i+32);j < 92;j++)
+    for (j = (i + 32); j < 92; j++)
     {
-        Cache_Left = (*(Pornt_Syn_B+(j / 16))<<(j % 16));
-        Cache_Right = (*(Pornt_Syn_B + (j / 16 + 1)))>>(16 - (j % 16));
-        Cache = (u8)(Cache_Left|Cache_Right);
-        if((Cache&0xffff) == Head_0x5515_or_0x5456)
+        Cache_Left = (*(Pornt_Syn_B + (j / 16)) << (j % 16));
+        Cache_Right = (*(Pornt_Syn_B + (j / 16 + 1))) >> (16 - (j % 16));
+        Cache = (u8)(Cache_Left | Cache_Right);
+        if ((Cache & 0xffff) == Head_0x5515_or_0x5456)
         {
             j += 16;
             BX_RecevieBlockFlag.BYTE <<= 1;
-            break;     //成功找到B部特点数据
+            break; //成功找到B部特点数据
         }
     }
-    for(k = 0;k < 6;k++)//转存处理C部数据 (登录/注销操作时，192位)
+    for (k = 0; k < 6; k++) //转存处理C部数据 (登录/注销操作时，192位)
     {
-        Cache_Left = SPI_RECEIVE_BUFF[j / 32]<<(j % 32);
-        Cache_Right = SPI_RECEIVE_BUFF[(j / 32) + 1]>> (32 - (j % 32));
+        Cache_Left = SPI_RECEIVE_BUFF[j / 32] << (j % 32);
+        Cache_Right = SPI_RECEIVE_BUFF[(j / 32) + 1] >> (32 - (j % 32));
         SPI_Receive_DataForC[k] = (Cache_Left | Cache_Right);
         j += 32;
     }
@@ -198,43 +197,53 @@ void DataReceive(void)
     static u8 StateCache = 0;
     static u8 Cache = 0;
 
-    switch(StateCache)
+    switch (StateCache)
     {
-      case 0:{
+    case 0:
+    {
         Cache <<= 1;
-        if(ADF7030DATA)Cache++;
-        if(Cache == 0x55)
+        if (ADF7030DATA)
+            Cache++;
+        if (Cache == 0x55)
         {
             StateCache = 1;
             X_HIS = 0;
             Cache = 0;
         }
-      }break;
-      case 1:{
-          if(ADF7030DATA != X_HIS)X_ERR++;
-          X_COUNT++;
-          X_HIS ^= 1;
-          if(X_COUNT >= 1000)
-              StateCache = 2;
-      }break;
-      case 2:if(X_COUNT == 0)StateCache = 0;break;
-      default:break;
+    }
+    break;
+    case 1:
+    {
+        if (ADF7030DATA != X_HIS)
+            X_ERR++;
+        X_COUNT++;
+        X_HIS ^= 1;
+        if (X_COUNT >= 1000)
+            StateCache = 2;
+    }
+    break;
+    case 2:
+        if (X_COUNT == 0)
+            StateCache = 0;
+        break;
+    default:
+        break;
     }
     EXTI_SR1_P4F = 1;
 }
 
 void ID_Decode_IDCheck(void)
 {
-    if(DataForC_Done == 1)
+    if (DataForC_Done == 1)
     {
         DataForC_Done = 0;
         Signal_DATA_Decode(0);
-        if(FLAG_Signal_DATA_OK == 1)
+        if (FLAG_Signal_DATA_OK == 1)
         {
             eeprom_IDcheck();
         }
     }
-/*   if(FLAG_Receiver_IDCheck)
+    /*   if(FLAG_Receiver_IDCheck)
     {
         FLAG_Receiver_IDCheck=0;
         Signal_DATA_Decode(0);
@@ -311,45 +320,48 @@ void ID_Decode_IDCheck(void)
     */
 }
 
-
-
-
 void Signal_DATA_Decode(UINT8 NUM_Type)
 {
     UINT32 data_in;
     UINT16 data_out;
     UINT16 data_NRZ[3];
-    UINT8 i,j;
-    for(i = 0;i < 6;i++)
+    UINT8 i, j;
+    for (i = 0; i < 6; i++)
     {
-        SPI_Receive_DataForC[i] = (u32)SPI_RECEIVE_BUFF[i*4+7]     | \
-                                  (u32)SPI_RECEIVE_BUFF[i*4+8]<<8  | \
-                                  (u32)SPI_RECEIVE_BUFF[i*4+9]<<16 | \
-                                  (u32)SPI_RECEIVE_BUFF[i*4+10]<<24;
+        SPI_Receive_DataForC[i] = (u32)SPI_RECEIVE_BUFF[i * 4 + 7] |
+                                  (u32)SPI_RECEIVE_BUFF[i * 4 + 8] << 8 |
+                                  (u32)SPI_RECEIVE_BUFF[i * 4 + 9] << 16 |
+                                  (u32)SPI_RECEIVE_BUFF[i * 4 + 10] << 24;
     }
-    for(i=0;i<3;i++)
+    for (i = 0; i < 3; i++)
     {
-        if(NUM_Type == 0)data_in = SPI_Receive_DataForC[i];
-        else data_in = SPI_Receive_DataForC[i+3];
+        if (NUM_Type == 0)
+            data_in = SPI_Receive_DataForC[i];
+        else
+            data_in = SPI_Receive_DataForC[i + 3];
         data_out = 0;
         data_in = data_in >> 1;
-        for(j = 0;j < 16;j++)
+        for (j = 0; j < 16; j++)
         {
-            data_out = data_out<<1;
-            if(data_in&0x00000001)data_out += 1;
+            data_out = data_out << 1;
+            if (data_in & 0x00000001)
+                data_out += 1;
             data_in = data_in >> 2;
         }
         data_NRZ[i] = data_out;
     }
-    if(data_NRZ[2] == ((data_NRZ[0] + data_NRZ[1]) & 0xFFFF)){
+    if (data_NRZ[2] == ((data_NRZ[0] + data_NRZ[1]) & 0xFFFF))
+    {
         YellowStutue = LEDFLASHASECONDFLAG | 0x80;
         FLAG_Signal_DATA_OK = 1;
         LCDUpdateIDFlag = 1;
         DATA_Packet_ID = (data_NRZ[1] & 0x00FF) * 65536 + data_NRZ[0];
-        if(DATA_Packet_ID == 0)FLAG_Signal_DATA_OK = 0;    //2014.3.21追加  不允许使用ID=0
-        DATA_Packet_Contro_buf = (data_NRZ[1] & 0xFF00) >> 8;  //2015.3.24修正 Control缓存起 ID判断是否学习过后才能使用
+        if (DATA_Packet_ID == 0)
+            FLAG_Signal_DATA_OK = 0;                          //2014.3.21追加  不允许使用ID=0
+        DATA_Packet_Contro_buf = (data_NRZ[1] & 0xFF00) >> 8; //2015.3.24修正 Control缓存起 ID判断是否学习过后才能使用
     }
-    else FLAG_Signal_DATA_OK = 0;
+    else
+        FLAG_Signal_DATA_OK = 0;
 }
 /**
 ****************************************************************************
@@ -360,53 +372,50 @@ void Signal_DATA_Decode(UINT8 NUM_Type)
 * @Brief    : NRZ 编码
 * @Version  : V1.0
 **/
-void DataEncodingSignal(u32 IDCache,u8 CMD)
+void DataEncodingSignal(u32 IDCache, u8 CMD)
 {
     u16 NRZCRC;
     u32 NRZCode[3];
     u8 i;
-    NRZCRC = (IDCache & 0xffffff) + ((((IDCache >> 16)&0xff) + (CMD * 256)) % 65536);
-    for(i = 0;i < 24;i++)
+    NRZCRC = (IDCache & 0xffffff) + ((((IDCache >> 16) & 0xff) + (CMD * 256)) % 65536);
+    for (i = 0; i < 24; i++)
     {
-        NRZCode[i/16] |= (IDCache&(1<<i))? 2 : 1;
-        NRZCode[i/16] <<= 2;
+        NRZCode[i / 16] |= (IDCache & (1 << i)) ? 2 : 1;
+        NRZCode[i / 16] <<= 2;
     }
-    for(i = 24;i < 32;i++)
+    for (i = 24; i < 32; i++)
     {
-        NRZCode[i/16] |= (CMD&(1<<(i - 24)))? 2 : 1;
-        NRZCode[i/16] <<= 2;
+        NRZCode[i / 16] |= (CMD & (1 << (i - 24))) ? 2 : 1;
+        NRZCode[i / 16] <<= 2;
     }
-    for(i = 32;i < 48;i++)
+    for (i = 32; i < 48; i++)
     {
-        NRZCode[i/16] |= (NRZCRC&(1<<(i - 32)))? 2 : 1;
-        NRZCode[i/16] <<= 2;
+        NRZCode[i / 16] |= (NRZCRC & (1 << (i - 32))) ? 2 : 1;
+        NRZCode[i / 16] <<= 2;
     }
 }
-
 
 void eeprom_IDcheck(void)
 {
     UINT16 i;
-    for(i = 0;i < ID_DATA_PCS;i++)//2015.3.24修正 Control缓存起 ID判断是否学习过后才能使用
+    for (i = 0; i < ID_DATA_PCS; i++) //2015.3.24修正 Control缓存起 ID判断是否学习过后才能使用
     {
-        if(ID_Receiver_DATA[i] == DATA_Packet_ID)
+        if (ID_Receiver_DATA[i] == DATA_Packet_ID)
         {
             i = ID_DATA_PCS;
             FLAG_IDCheck_OK = 1;
             DATA_Packet_Control = DATA_Packet_Contro_buf;
         }
-        if((FLAG_ID_Erase_Login == 1)&&(FLAG_ID_Erase_Login_PCS == 1))
+        if ((FLAG_ID_Erase_Login == 1) && (FLAG_ID_Erase_Login_PCS == 1))
         {
             i = ID_DATA_PCS;
             FLAG_IDCheck_OK = 0;
             DATA_Packet_Control = DATA_Packet_Contro_buf;
-        }         //追加多次ID登录
-   }
-   FLAG_IDCheck_OK=1;
-   DATA_Packet_Control = DATA_Packet_Contro_buf;
-
+        } //追加多次ID登录
+    }
+    FLAG_IDCheck_OK = 1;
+    DATA_Packet_Control = DATA_Packet_Contro_buf;
 }
-
 
 void BEEP_and_LED(void)
 {
@@ -440,10 +449,9 @@ void BEEP_and_LED(void)
     */
 }
 
-
 void Receiver_BEEP(void)
 {
- /*  UINT16 i,j;
+    /*  UINT16 i,j;
    if(FLAG_Receiver_BEEP==0)
    {
        FLAG_Receiver_BEEP=1;
@@ -472,12 +480,9 @@ void Receiver_BEEP(void)
     */
 }
 
-
-
-
 void ID_Decode_OUT(void)
 {
-        /*
+    /*
     UINT8 Control_i;
 //    if(Freq_Scanning_CH_bak==0) Control_i=DATA_Packet_Control&0xFF;
 //    else Control_i=DATA_Packet_Control&0x0E;
@@ -622,8 +627,7 @@ void ID_Decode_OUT(void)
     */
 }
 
-
-void  Freq_Scanning(void)
+void Freq_Scanning(void)
 {
     /*
 //    //if((FLAG_Receiver_Scanning==1)&&(FLAG_APP_RX==1)&&(FLAG_UART_ok==0))

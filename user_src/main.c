@@ -20,15 +20,15 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include  <iostm8l151g4.h>				// CPU型号
+#include <iostm8l151g4.h> // CPU型号
 //#include "stm8l15x.h"
-#include "Pin_define.h"		// 管脚定义
-#include "initial.h"		// 初始????? 预定?????#include "ram.h"		// RAM定义
+#include "Pin_define.h" // 管脚定义
+#include "initial.h"    // 初始????? 预定?????#include "ram.h"		// RAM定义
 #include "eeprom.h"
 #include "ADF7030_1.h"
-#include "Timer.h"		// 定时?????#include "eeprom.h"		// eeprom
-#include "uart.h"		// uart
-#include "lcd.h"		// lcd
+#include "Timer.h" // 定时?????#include "eeprom.h"		// eeprom
+#include "uart.h"  // uart
+#include "lcd.h"   // lcd
 #include "stdlib.h"
 #include "time.h"
 #include "ID_Decode.h"
@@ -50,56 +50,63 @@
   * @retval None
   */
 
-UINT16 rand_data=0;
-u8 FLAG_SW10=0;
-u16 KEY_COUNT=0;
+UINT16 rand_data = 0;
+u8 FLAG_SW10 = 0;
+u16 KEY_COUNT = 0;
 void main(void)
 {
     u8 Key_Value;
-    _DI();		// 关全局中断
-    RAM_clean();       // 清除RAM
+    _DI();       // 关全局中断
+    RAM_clean(); // 清除RAM
     VHF_GPIO_INIT();
     SysClock_Init();
     InitialFlashReg();
     eeprom_sys_load();
     EXIT_init();
     TIM4_Init();
-    UART1_INIT();  // UART1 for PC Software
-    _EI();       // 允许中断
+    UART1_INIT(); // UART1 for PC Software
+    _EI();        // 允许中断
     WDT_init();
     lcd_init();
     ClearWDT(); // Service the WDT
     ADF7030Init();
     //beep_init();
-    srand((unsigned) time(NULL));
-    TX_DataLoad(10010101,OpenMode,&CONST_TXPACKET_DATA_20000AF0[0]);
-    while(WORK_TEST == 0)//测试模式
+    srand((unsigned)time(NULL));
+    TX_DataLoad(10010101, OpenMode, &CONST_TXPACKET_DATA_20000AF0[0]);
+    while (WORK_TEST == 0) //测试模式
     {
         ClearWDT(); // Service the WDT
         LCDTestDisplay();
-//        TestCarrier(KEY_SCAN(0));
-//        ModeTrans(KEY_SCAN(0));
+        //        TestCarrier(KEY_SCAN(0));
+        //        ModeTrans(KEY_SCAN(0));
         TestFunV2(KEY_SCAN(0));
         LEDCtr();
-
     }
-    while(1)
+    while (1)
     {
         LEDCtr();
         ClearWDT(); // Service the WDT
         lcd_desplay();
         Key_Value = KEY_SCAN(0);
-        if(Key_Value != KEY_Empty)
+        if (Key_Value != KEY_Empty)
         {
-            switch(Key_Value)
+            switch (Key_Value)
             {
-              case KEY_Empty:break;
-              case KEY_SW2_Down:TX_DataLoad(1,OpenMode,&CONST_TXPACKET_DATA_20000AF0[0]);break;
-              case KEY_SW3_Down:TX_DataLoad(1,StopMode,&CONST_TXPACKET_DATA_20000AF0[0]);break;
-              case KEY_SW4_Down:TX_DataLoad(1,CloseMode,&CONST_TXPACKET_DATA_20000AF0[0]);break;
-              default:break;
+            case KEY_Empty:
+                break;
+            case KEY_SW2_Down:
+                TX_DataLoad(1, OpenMode, &CONST_TXPACKET_DATA_20000AF0[0]);
+                break;
+            case KEY_SW3_Down:
+                TX_DataLoad(1, StopMode, &CONST_TXPACKET_DATA_20000AF0[0]);
+                break;
+            case KEY_SW4_Down:
+                TX_DataLoad(1, CloseMode, &CONST_TXPACKET_DATA_20000AF0[0]);
+                break;
+            default:
+                break;
             }
-            if(FLAG_SW10 == 0)
+            if (FLAG_SW10 == 0)
             {
                 ADF7030_WRITING_PROFILE_FROM_POWERON();
                 ADF7030_TRANSMITTING_FROM_POWEROFF();
@@ -109,13 +116,13 @@ void main(void)
         }
         else
         {
-            if(FLAG_SW10==1)
+            if (FLAG_SW10 == 1)
             {
                 KEY_COUNT++;
-                if(KEY_COUNT > 500)
+                if (KEY_COUNT > 500)
                 {
-                    KEY_COUNT =0 ;
-                    FLAG_SW10 =0;
+                    KEY_COUNT = 0;
+                    FLAG_SW10 = 0;
                     ADF7030_WRITING_PROFILE_FROM_POWERON();
                     ADF7030_RECEIVING_FROM_POWEROFF();
                     // ADF7030_ACC_FROM_POWEROFF();
@@ -123,30 +130,29 @@ void main(void)
             }
         }
 
-//        ID_Decode_IDCheck();
+        //        ID_Decode_IDCheck();
         SCAN_RECEIVE_PACKET();
-
     }
 
-//    while (1)
-//    {
-//        rand_data=rand();
-//        ClearWDT(); // Service the WDT
-//        /*
-//        ID_Decode_IDCheck();
-//        if(time_Login_exit_256==0)ID_Decode_OUT();
-//        Freq_Scanning();
-//        ID_learn();
-//        if(rxphase!=0)READ_RSSI_avg();
-//        lcd_desplay();
-//
-//        if((RAM_rssi_AVG>=60)||(FG_Receiver_LED_RX==1))LED_YELLOW=1;   //26   35
-//        else if((RAM_rssi_AVG<=59)&&(FG_Receiver_LED_RX==0))LED_YELLOW=0;  //25  34
-//          */
-//    }
+    //    while (1)
+    //    {
+    //        rand_data=rand();
+    //        ClearWDT(); // Service the WDT
+    //        /*
+    //        ID_Decode_IDCheck();
+    //        if(time_Login_exit_256==0)ID_Decode_OUT();
+    //        Freq_Scanning();
+    //        ID_learn();
+    //        if(rxphase!=0)READ_RSSI_avg();
+    //        lcd_desplay();
+    //
+    //        if((RAM_rssi_AVG>=60)||(FG_Receiver_LED_RX==1))LED_YELLOW=1;   //26   35
+    //        else if((RAM_rssi_AVG<=59)&&(FG_Receiver_LED_RX==0))LED_YELLOW=0;  //25  34
+    //          */
+    //    }
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 
 /**
   * @brief  Reports the name of the source file and the source line number
@@ -155,15 +161,15 @@ void main(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* User can add his own implementation to report the file name and line number,
+    /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+    /* Infinite loop */
+    while (1)
+    {
+    }
 }
 #endif
 

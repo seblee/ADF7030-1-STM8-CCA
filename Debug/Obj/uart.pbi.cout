@@ -1,22 +1,22 @@
-"D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\user_src\uart.c"
+"D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\user_src\uart.c"
 -std=c99
 -ferror-limit=100
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\user_src
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\user_src
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\Libraries\inc
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\Libraries\inc
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\ADF7030
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\ADF7030
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\stm8\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.3\stm8\inc\c
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\user_src
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\user_src
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\Libraries\inc
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\Libraries\inc
 -I
-D:\MyCloud\Working\ADF7030-1 程序\ADF7030-1 STM8 CCA\ADF7030
+D:\MyCloud\Working\ADF7030-1 Program\ADF7030-1 STM8 CCA\ADF7030
 -DSTM8L15X_MD=1
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
